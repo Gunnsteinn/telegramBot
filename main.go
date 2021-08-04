@@ -87,5 +87,5 @@ func sayPolo(chatID int64) error {
 // FInally, the main funtion starts our server on port 3000
 func main() {
 	fmt.Println("Hola Vladi >>> main")
-	http.ListenAndServe(":3000", http.HandlerFunc(Handler))
+	http.ListenAndServe(":8080", http.HandlerFunc(Handler))
 }
