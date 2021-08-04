@@ -24,7 +24,8 @@ type webhookReqBody struct {
 
 // Handler This handler is called everytime telegram sends us a webhook event
 func Handler(res http.ResponseWriter, req *http.Request) {
-	fmt.Println("Hola Vladi >>> Handler")
+
+	log.Println("Handler Method:" + req.Method)
 	// First, decode the JSON response body
 	body := &webhookReqBody{}
 	//body.Message.Chat.ID = 591887299
@@ -35,7 +36,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 
 	// Check if the message contains the word "marco"
 	// if not, return without doing anything
-	if !strings.Contains(strings.ToLower(body.Message.Text), "marco") {
+	if !strings.Contains(strings.ToLower(body.Message.Text), "/start") {
 		return
 	}
 
@@ -86,14 +87,14 @@ func sayPolo(chatID int64) error {
 	return nil
 }
 
-// FInally, the main funtion starts our server on port 3000
+// FInally, the main funtion starts our server on port os.Getenv
 func main() {
-	fmt.Println("Hola Vladi >>> main")
-	port := os.Getenv("PORT")
 
+	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
 	log.Println("$PORT is:" + port)
+
 	http.ListenAndServe(":"+port, http.HandlerFunc(Handler))
 }
