@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -87,5 +89,11 @@ func sayPolo(chatID int64) error {
 // FInally, the main funtion starts our server on port 3000
 func main() {
 	fmt.Println("Hola Vladi >>> main")
-	http.ListenAndServe(":8080", http.HandlerFunc(Handler))
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+	log.Println("$PORT is:" + port)
+	http.ListenAndServe(":"+port, http.HandlerFunc(Handler))
 }
