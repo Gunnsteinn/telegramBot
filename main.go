@@ -35,7 +35,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 
 	// Check if the message contains the word "marco"
 	// if not, return without doing anything
-	if !strings.Contains(strings.ToLower(body.Message.Text), "Hola Vladi") {
+	if !strings.Contains(strings.ToLower(body.Message.Text), "hola vladi") {
 		log.Println("HAy algo mal" + strings.ToLower(body.Message.Text))
 		return
 	}
