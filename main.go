@@ -35,7 +35,7 @@ func Handler(res http.ResponseWriter, req *http.Request) {
 
 	// Check if the message contains the word "marco"
 	// if not, return without doing anything
-	if !strings.Contains(strings.ToLower(body.Message.Text), "/info") {
+	if !strings.Contains(strings.ToLower(body.Message.Text), "Hola Vladi") {
 		return
 	}
 
@@ -66,7 +66,7 @@ func getInfo(chatID int64) error {
 	// Create the request body struct
 	reqBody := &sendMessageReqBody{
 		ChatID: chatID,
-		Text:   "Polo!!",
+		Text:   "Como quieras.",
 	}
 	// Create the JSON body from the struct
 	reqBytes, err := json.Marshal(reqBody)
