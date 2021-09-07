@@ -46,8 +46,8 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 		sendMessage(webhookReqBody.Message.Chat.ID, "Manco")
 	}
 	// log a confirmation message if the message is sent successfully
-	fmt.Println("reply sent")
-	sendMessage(webhookReqBody.Message.Chat.ID, string(sponsorInfo.Body))
+	fmt.Println("reply sent" + string(sponsorInfo.Body))
+	sendMessage(webhookReqBody.Message.Chat.ID, "")
 
 	return nil, nil
 }
@@ -55,7 +55,7 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 // sayPolo takes a chatID and sends "polo" to them
 func sendMessage(chatID int64, chatText string) error {
 	// Create the request body struct
-		chatText = "*bold *text* _italic *text_ __underline__ " +
+	chatText = "*bold *text* _italic *text_ __underline__ " +
 		"~strikethrough~ *bold _italic bold " +
 		"~italic bold strikethrough~ __underline italic bold___ bold* [inline URL](http://www.example.com/) " +
 		"[inline mention of a user](tg://user?id=123456789) " +
