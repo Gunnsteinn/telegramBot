@@ -36,11 +36,6 @@ func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
 
 func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.SendMessageReqBody, error) {
 
-	//sponsorInfo, getAdvErr := GetSponsor())
-	//if getAdvErr != nil {
-	//	sendMessage(webhookReqBody.Message.Chat.ID, "Manco")
-	//}
-	fmt.Println("Service 1")
 	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + strings.ToLower(webhookReqBody.Message.Text))
 	if getAdvErr != nil {
 		sendMessage(webhookReqBody.Message.Chat.ID, "Manco")
@@ -67,13 +62,13 @@ func sendMessage(chatID int64, chatText string) error {
 		ChatID: chatID,
 		Text:   chatText,
 	}
-	fmt.Println("Service 2")
+
 	// Create the JSON body from the struct
 	reqBytes, err := json.Marshal(reqBody)
 	if err != nil {
 		return err
 	}
-	fmt.Println("Service 3")
+
 	// Send a post request with your token
 	res, err := http.Post("https://api.telegram.org/bot1913861473:AAGT0ranx9RBMrtRVzrLx5PYiakOsNH6VOE/sendMessage", "application/json", bytes.NewBuffer(reqBytes))
 	if err != nil {
