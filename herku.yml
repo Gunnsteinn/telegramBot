@@ -2,4 +2,7 @@
 # Officially unsupported, but works.
 build:
   languages:
-    - Dockerfile
+    - go
+
+run:
+  web: telegramBot
