@@ -23,6 +23,7 @@ type webhookReqBody struct {
 }
 
 // Handler This handler is called everytime telegram sends us a webhook event
+// curl -F "url=https://e54851fb.ngrok.io/"  https://api.telegram.org/bot<your_api_token>/setWebhook
 func Handler(res http.ResponseWriter, req *http.Request) {
 
 	// First, decode the JSON response body
