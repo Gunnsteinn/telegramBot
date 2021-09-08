@@ -59,9 +59,9 @@ func sendMessage(chatID int64, chatText string) error {
 		"pre-formatted fixed-width code block written in the Python programming language" +
 		"```"
 	reqBody := domain.SendMessageReqBody{
-		ChatID:    chatID,
-		Text:      chatText,
-		ParseMode: "MarkdownV2",
+		ChatID: chatID,
+		Text:   chatText,
+		//ParseMode: "MarkdownV2",
 	}
 
 	// Create the JSON body from the struct
