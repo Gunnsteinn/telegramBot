@@ -80,18 +80,25 @@ func textGenerator(sponsorInfo []byte) string {
 	var sponsor domain.Sponsor
 	json.Unmarshal(sponsorInfo, &sponsor)
 
-	chatText := `- Negrita: <b>texto en negrita</b>, <strong>negrita</strong>
-				- Cursiva: <i>texto en cursiva</i>, <em>cursiva</em>
+	chatText := `
+				Buenos días <b>Facundo Ompre</b>!!!
 
-				- Subrayado: <u>texto subrayado</u>, <ins>subrayado</ins>
+				- Este es el informe de tus equipos:
 
-				- Tachado: <s>texto tachado</s>, <strike>tachado</strike>, <del>tachado</del>
-
-				Enlaces: <a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png">Tecnonucleous</a>
-
-				- Código: <code>texto con el código</code>
-
-				- Indica a la API que debe respetar los saltos de línea y los espacios en blanco: <pre>Texto con saltos de línea y espacios</pre>`
+					<code>Equipo:\tGeralt
+					Porcentaje del Equipo:\t100
+					SPLs Ganados:\t239</code>
+				 
+					<code>Equipo:\tBrowser
+					"pool_percent":\t100
+					SPLs Ganados:\t280</code>
+				
+					<code>Equipo:\tLink
+					Porcentaje del Equipo:\t33
+					SPLs Ganados:\t378</code>
+				
+				<b>Total SLP:  <i>897</i></b>
+				<b>Total UDS:  <i>84,1386</i></b>`
 
 	return chatText
 }
