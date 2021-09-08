@@ -61,7 +61,7 @@ func sendMessage(chatID int64, chatText string) error {
 	reqBody := domain.SendMessageReqBody{
 		ChatID:    chatID,
 		Text:      chatText,
-		ParseMode: "Markdown",
+		ParseMode: "markdown",
 	}
 
 	// Create the JSON body from the struct
