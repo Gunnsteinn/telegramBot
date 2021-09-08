@@ -18,6 +18,7 @@ type WebhookReqBody struct {
 // of the send message request
 // https://core.telegram.org/bots/api#sendmessage
 type SendMessageReqBody struct {
-	ChatID int64  `json:"chat_id"`
-	Text   string `json:"text"`
+	ChatID    int64  `json:"chat_id"`
+	Text      string `json:"text"`
+	ParseMode string `json:"parse_mode`
 }
