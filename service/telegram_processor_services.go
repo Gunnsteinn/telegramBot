@@ -58,7 +58,7 @@ func sendMessage(chatID int64, chatText string) error {
 				- Tachado: <s>texto tachado</s>, <strike>tachado</strike>, <del>tachado</del>
 
 				Enlaces: <a href="https://www.Tecnonucleous.com/">Tecnonucleous</a>
-
+				<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png"></a>
 				<a href="tg://user?id=123456789">inline mention of a user</a>
 				- Código: <code>texto con el código</code>
 
