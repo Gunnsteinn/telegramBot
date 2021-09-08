@@ -80,7 +80,7 @@ func textGenerator(sponsorInfo []byte) string {
 	var sponsor domain.Sponsor
 	json.Unmarshal(sponsorInfo, &sponsor)
 
-	chatText := `
+	chatText := `<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png"></a>
 				Buenos días <b>Facundo Ompre</b>!!!
 
 				- Este es el informe de tus equipos:
