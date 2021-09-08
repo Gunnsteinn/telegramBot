@@ -80,22 +80,22 @@ func textGenerator(sponsorInfo []byte) string {
 	var sponsor domain.Sponsor
 	json.Unmarshal(sponsorInfo, &sponsor)
 
-	chatText := `<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png"></a>
-				Buenos días <b>Facundo Ompre</b>!!!
+	chatText := `
+				Buenos días <b>Facundo Ompre<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png">.</a></b>!!!
 
 				- Este es el informe de tus equipos:
 
-					<code>Equipo:\tGeralt
-					Porcentaje del Equipo:\t100
-					SPLs Ganados:\t239</code>
+					<code>Equipo:&nbsp;Geralt
+					Porcentaje del Equipo:&nbsp;100
+					SPLs Ganados:&nbsp;239</code>
 				 
-					<code>Equipo:\tBrowser
-					"pool_percent":\t100
-					SPLs Ganados:\t280</code>
+					<code>Equipo:&nbsp;Browser
+					"pool_percent":&nbsp;100
+					SPLs Ganados:&nbsp;280</code>
 				
-					<code>Equipo:\tLink
-					Porcentaje del Equipo:\t33
-					SPLs Ganados:\t378</code>
+					<code>Equipo:&nbsp;Link
+					Porcentaje del Equipo:&nbsp;33
+					SPLs Ganados:&nbsp;378</code>
 				
 				<b>Total SLP:  <i>897</i></b>
 				<b>Total UDS:  <i>84,1386</i></b>`
