@@ -90,30 +90,46 @@ func textGenerator(sponsorInfo []byte) string {
 	fmt.Println(priceInfo)
 
 	chatText := `
-				Buenos días <b>Facundo Ompre<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png">.</a></b>!!!
+				Buenos días <b>Facundo Ompre<a href="https://marketplace.axieinfinity.com/profile/inventory/axie">.</a></b>!!!
 
 				- Este es el informe de tus equipos:
 
 					<code>
-					Equipo:       <b>Geralt</b>
-					[%]Equipo:    <b>100</b>
-					SPLs Ganados: <b>239</b>
+					Equipo:       Geralt
+					[%]Equipo:    100
+					SPLs Ganados: 239
 					</code>
-				 
 					<code>
-					Equipo:       <b>Browser</b>
-					[%]Equipo:    <b>100</b>
-					SPLs Ganados: <b>280</b>
+					Equipo:       Browser
+					[%]Equipo:    100
+					SPLs Ganados: 280
 					</code>
-				
 					<code>
-					Equipo:        <b>Link</b>
-					[%]Equipo:     <b>33</b>
-					SPLs Ganados:  <b>378</b>
+					Equipo:        Link
+					[%]Equipo:     33
+					SPLs Ganados:  378
 					</code>
 				
 				<b>Total SLP:  <i>897</i></b>
 				<b>Total UDS:  <i>84,1386</i></b>`
-
+	//fmt.Sprintf("Buenos días <b>Facundo Ompre<a href=\"https://marketplace.axieinfinity.com/profile/inventory/axie\">.</a></b>!!!\n\n\t\t\t\t %s" , chatText)
+	//"- Este es el informe de tus equipos:\n\n\t\t\t\t\t" +
+	//"<code>\n\t\t\t\t\t" +
+	//"Equipo:       Geralt\n\t\t\t\t\t" +
+	//"[%]Equipo:    100\n\t\t\t\t\t" +
+	//"SPLs Ganados: 239\n\t\t\t\t\t" +
+	//"</code>\n\t\t\t\t\t" +
+	//"<code>\n\t\t\t\t\t" +
+	//"Equipo:       Browser\n\t\t\t\t\t" +
+	//"[%]Equipo:    100\n\t\t\t\t\t" +
+	//"SPLs Ganados: 280\n\t\t\t\t\t" +
+	//"</code>\n\t\t\t\t\t" +
+	//"<code>\n\t\t\t\t\t" +
+	//"Equipo:        Link\n\t\t\t\t\t" +
+	//"[%]Equipo:     33\n\t\t\t\t\t" +
+	//"SPLs Ganados:  378\n\t\t\t\t\t" +
+	//"</code>\n\t\t\t\t\n\t\t\t\t" +
+	//"<b>Total SLP:  <i>897</i></b>\n\t\t\t\t" +
+	//"<b>Total UDS:  <i>84,1386</i></b> %s", chatText)
 	return chatText
 }
