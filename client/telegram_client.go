@@ -31,7 +31,8 @@ func (r *responseClient) Post(url string, body interface{}) (*domain.Response, e
 }
 
 func (r *responseClient) do(method string, url string, body interface{}) (*domain.Response, error) {
-	requestBody, err := json.Marshal(body)
+
+	requestBody, err := getRequestBody(body)
 	if err != nil {
 		return nil, err
 	}
@@ -41,6 +42,7 @@ func (r *responseClient) do(method string, url string, body interface{}) (*domai
 		return nil, errors.New("unable to create a new request")
 	}
 
+	request.Header.Add("Content-Type", "application/json")
 	response, err := r.clients.Do(request)
 	if err != nil {
 		return nil, err
@@ -101,4 +103,11 @@ func getClient(url string, cBody interface{}, cResp interface{}) (interface{}, e
 	}
 
 	return &cResp, nil
+}
+
+func getRequestBody(body interface{}) ([]byte, error) {
+	if body == nil {
+		return nil, nil
+	}
+	return json.Marshal(body)
 }
