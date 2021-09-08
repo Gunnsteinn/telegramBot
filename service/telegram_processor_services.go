@@ -13,13 +13,15 @@ import (
 )
 
 const (
-	uriCryptoGuild = "uri_crypto_guild"
-	uriTelegramBot = "uri_telegram_bot"
+	uriCryptoGuild  = "uri_crypto_guild"
+	uriTelegramBot  = "uri_telegram_bot"
+	uriBinancePrice = "uri_binance_price"
 )
 
 var (
 	uriSponsor  = os.Getenv(uriCryptoGuild)
 	uriTelegram = os.Getenv(uriTelegramBot)
+	uriBinance  = os.Getenv(uriBinancePrice)
 )
 
 func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
@@ -80,22 +82,28 @@ func textGenerator(sponsorInfo []byte) string {
 	var sponsor domain.Sponsor
 	json.Unmarshal(sponsorInfo, &sponsor)
 
+	priceInfo, getAdvErr := client.ResponseClient.Get("https://api.binance.com/api/v3/ticker/price?symbol=SLPUSDT")
+	if getAdvErr != nil {
+		fmt.Println(getAdvErr)
+	}
+	fmt.Println(priceInfo)
+
 	chatText := `
 				Buenos días <b>Facundo Ompre<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png">.</a></b>!!!
 
 				- Este es el informe de tus equipos:
 
-					<code>Equipo:&nbsp;Geralt
-					Porcentaje del Equipo:&nbsp;100
-					SPLs Ganados:&nbsp;239</code>
+					<code>Equipo:           Geralt
+					Porcentaje del Equipo:  100
+					SPLs Ganados:           239</code>
 				 
-					<code>Equipo:&nbsp;Browser
-					"pool_percent":&nbsp;100
-					SPLs Ganados:&nbsp;280</code>
+					<code>Equipo:           Browser
+					"pool_percent":         100
+					SPLs Ganados:           280</code>
 				
-					<code>Equipo:&nbsp;Link
-					Porcentaje del Equipo:&nbsp;33
-					SPLs Ganados:&nbsp;378</code>
+					<code>Equipo:           Link
+					Porcentaje del Equipo:  33
+					SPLs Ganados:           378</code>
 				
 				<b>Total SLP:  <i>897</i></b>
 				<b>Total UDS:  <i>84,1386</i></b>`
