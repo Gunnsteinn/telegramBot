@@ -86,6 +86,7 @@ func textGenerator(sponsorInfo []byte) string {
 	if getAdvErr != nil {
 		fmt.Println(getAdvErr)
 	}
+
 	fmt.Println(priceInfo)
 	chatText := `
 				Buenos días <b>Facundo Ompre<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png">.</a></b>!!!
