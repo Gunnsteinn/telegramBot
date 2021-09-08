@@ -86,6 +86,7 @@ func textGenerator(sponsorInfo []byte) string {
 	if getAdvErr != nil {
 		fmt.Println(getAdvErr)
 	}
+
 	fmt.Println(priceInfo)
 
 	chatText := `
@@ -93,17 +94,23 @@ func textGenerator(sponsorInfo []byte) string {
 
 				- Este es el informe de tus equipos:
 
-					<code>Equipo:           Geralt
-					Porcentaje del Equipo:  100
-					SPLs Ganados:           239</code>
+					<code>
+					Equipo:       <b>Geralt</b>
+					[%]Equipo:    <b>100</b>
+					SPLs Ganados: <b>239</b>
+					</code>
 				 
-					<code>Equipo:           Browser
-					"pool_percent":         100
-					SPLs Ganados:           280</code>
+					<code>
+					Equipo:       <b>Browser</b>
+					[%]Equipo:    <b>100</b>
+					SPLs Ganados: <b>280</b>
+					</code>
 				
-					<code>Equipo:           Link
-					Porcentaje del Equipo:  33
-					SPLs Ganados:           378</code>
+					<code>
+					Equipo:        <b>Link</b>
+					[%]Equipo:     <b>33</b>
+					SPLs Ganados:  <b>378</b>
+					</code>
 				
 				<b>Total SLP:  <i>897</i></b>
 				<b>Total UDS:  <i>84,1386</i></b>`
