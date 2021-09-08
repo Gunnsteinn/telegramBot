@@ -59,9 +59,9 @@ func sendMessage(chatID int64, chatText string) error {
 
 				Enlaces: <a href="https://www.Tecnonucleous.com/">Tecnonucleous</a>
 
-				<a href="http://www.axie.com.ar/images/axie.jpg"></a>
+				<a href="https://www.carspecs.us/photos/c8447c97e355f462368178b3518367824a757327-2000.jpg"> </a>
 
-				<a href="http://www.axie.com.ar/images/axie.jpg">&#8205;</a>
+				<a href="https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png">&#8205;</a>
 
 				<a href="tg://user?id=123456789">inline mention of a user</a>
 				- Código: <code>texto con el código</code>
