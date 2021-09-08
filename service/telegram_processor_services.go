@@ -50,18 +50,24 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 // sayPolo takes a chatID and sends "polo" to them
 func sendMessage(chatID int64, chatText string) error {
 	// Create the request body struct
-	chatText = "*bold *text* _italic *text_ __underline__ " +
-		"~strikethrough~ *bold _italic bold " +
-		"~italic bold strikethrough~ __underline italic bold___ bold* [inline URL](http://www.example.com/) " +
-		"[inline mention of a user](tg://user?id=123456789) " +
-		"`inline fixed-width code` " +
-		"```pre-formatted fixed-width code block``` ```python " +
-		"pre-formatted fixed-width code block written in the Python programming language" +
-		"```"
+	chatText = `- Negrita: <b>texto en negrita</b>, <strong>negrita</strong>
+				- Cursiva: <i>texto en cursiva</i>, <em>cursiva</em>
+
+				- Subrayado: <u>texto subrayado</u>, <ins>subrayado</ins>
+
+				- Tachado: <s>texto tachado</s>, <strike>tachado</strike>, <del>tachado</del>
+
+				Enlaces: <a href="https://www.Tecnonucleous.com/">Tecnonucleous</a>
+
+				<a href="tg://user?id=123456789">inline mention of a user</a>
+				- Código: <code>texto con el código</code>
+
+				- Indica a la API que debe respetar los saltos de línea y los espacios en blanco: <pre>Texto con saltos de línea y espacios</pre>`
+
 	reqBody := domain.SendMessageReqBody{
 		ChatID:    chatID,
 		Text:      chatText,
-		ParseMode: "markdown",
+		ParseMode: "HTML",
 	}
 
 	// Create the JSON body from the struct
