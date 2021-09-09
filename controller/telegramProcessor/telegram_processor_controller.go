@@ -22,7 +22,7 @@ func getSponsorId(sponsorWalletParam string) (string, *errors.RestErr) {
 }
 
 func TelegramProcessor(c *gin.Context) {
-	fmt.Println(c)
+	fmt.Println(c.Request)
 	var webhookReqBody domain.WebhookReqBody
 	if err := c.ShouldBindJSON(&webhookReqBody); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body.")
