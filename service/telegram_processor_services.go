@@ -42,27 +42,31 @@ func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
 }
 
 func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.SendMessageReqBody, error) {
-	fmt.Println("reply sent" + string(uriSponsor+strings.ToLower(webhookReqBody.Message.Text)))
-	fmt.Println(webhookReqBody.Message)
+	fmt.Println("reply sent " + string(uriSponsor+strings.ToLower(webhookReqBody.Message.Text)))
 
 	if !(len(webhookReqBody.Message.Text) > 0) {
-		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text")
+		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text.")
 	}
 
 	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + strings.ToLower(webhookReqBody.Message.Text))
+	fmt.Println("------- 1 -------")
+	fmt.Println(getAdvErr)
+	fmt.Println("------- 2 -------")
+	fmt.Println(sponsorInfo)
+	fmt.Println("------- 3 -------")
 	if getAdvErr != nil {
-		err := sendMessage(webhookReqBody.Message.Chat.ID, "Manco")
-		if err != nil {
-			return nil, err
-		}
+		fmt.Println("------- 4 -------")
+		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
 	// log a confirmation message if the message is sent successfully
 	//fmt.Println("reply sent" + string(sponsorInfo.Body))
 	err := sendMessage(webhookReqBody.Message.Chat.ID, textGenerator(sponsorInfo.Body))
+	fmt.Println("------- 5 -------")
 	if err != nil {
+		fmt.Println("------- 6 -------")
 		return nil, err
 	}
-
+	fmt.Println("------- 7 -------")
 	return nil, nil
 }
 
@@ -71,7 +75,7 @@ func sendMessage(chatID int64, chatText string) error {
 	// Create the request body struct
 
 	reqBody := domain.SendMessageReqBody{
-		ChatID:    591887299,
+		ChatID:    chatID,
 		Text:      chatText,
 		ParseMode: "HTML",
 	}
