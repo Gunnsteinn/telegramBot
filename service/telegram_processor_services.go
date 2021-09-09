@@ -63,7 +63,6 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 	return nil, nil
 }
 
-// sayPolo takes a chatID and sends "polo" to them
 func sendMessage(chatID int64, chatText string) error {
 	result, getAdvErr := client.ResponseClient.Post(uriTelegram, domain.SendMessageReqBody{
 		ChatID:    chatID,
@@ -101,9 +100,9 @@ func textGenerator(sponsorInfo []byte) string {
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
-		sponsorProfitSlp := int(math.RoundToEven(float64(team.Adventurer.ProfitSlp / 2)))
+		sponsorProfitSlp := int(math.Round(float64(team.Adventurer.ProfitSlp)/2)) * (int(team.PoolPercent) / 100)
 		teamSlice = append(teamSlice, fmt.Sprintf("<code>\n\t\t\t\t\tEquipo:       %s\n\t\t\t\t\t[%s]Equipo:    %f\n\t\t\t\t\tSPLs Ganados: %d\n\t\t\t\t\t</code>\n\t\t\t\t\t", team.TeamName, "%", team.PoolPercent, sponsorProfitSlp))
-		TotalSlp += TotalSlp + (sponsorProfitSlp * (int(team.PoolPercent) / 100))
+		TotalSlp += sponsorProfitSlp
 	}
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
 	TotalUds := price * float64(TotalSlp)
