@@ -43,6 +43,7 @@ func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
 
 func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.SendMessageReqBody, error) {
 	fmt.Println("reply sent" + string(uriSponsor+strings.ToLower(webhookReqBody.Message.Text)))
+	fmt.Println(webhookReqBody.Message)
 	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + strings.ToLower(webhookReqBody.Message.Text))
 	if getAdvErr != nil {
 		err := sendMessage(webhookReqBody.Message.Chat.ID, "Manco")
@@ -51,7 +52,7 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 		}
 	}
 	// log a confirmation message if the message is sent successfully
-	fmt.Println("reply sent" + string(sponsorInfo.Body))
+	//fmt.Println("reply sent" + string(sponsorInfo.Body))
 	err := sendMessage(webhookReqBody.Message.Chat.ID, textGenerator(sponsorInfo.Body))
 	if err != nil {
 		return nil, err
