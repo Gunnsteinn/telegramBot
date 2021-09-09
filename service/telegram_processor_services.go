@@ -71,7 +71,7 @@ func sendMessage(chatID int64, chatText string) error {
 	// Create the request body struct
 
 	reqBody := domain.SendMessageReqBody{
-		ChatID:    chatID,
+		ChatID:    591887299,
 		Text:      chatText,
 		ParseMode: "HTML",
 	}
