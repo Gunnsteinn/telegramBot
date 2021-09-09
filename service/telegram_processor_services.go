@@ -2,13 +2,15 @@ package service
 
 import (
 	"bytes"
+	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/Gunnsteinn/telegramBot/client"
 	"github.com/Gunnsteinn/telegramBot/domain"
+	"github.com/Gunnsteinn/telegramBot/utils/errors"
 	"math"
 	"net/http"
+	"net/mail"
 	"os"
 	"strconv"
 	"strings"
@@ -42,31 +44,25 @@ func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
 }
 
 func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.SendMessageReqBody, error) {
-	fmt.Println("reply sent " + string(uriSponsor+strings.ToLower(webhookReqBody.Message.Text)))
-
 	if !(len(webhookReqBody.Message.Text) > 0) {
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text.")
 	}
 
-	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + strings.ToLower(webhookReqBody.Message.Text))
-	fmt.Println("------- 1 -------")
-	fmt.Println(getAdvErr)
-	fmt.Println("------- 2 -------")
-	fmt.Println(sponsorInfo)
-	fmt.Println("------- 3 -------")
+	sponsorUri, getSponsorErr := getSponsorId(strings.ToLower(webhookReqBody.Message.Text))
+	if getSponsorErr != nil {
+		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
+	}
+
+	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + sponsorUri)
 	if getAdvErr != nil {
-		fmt.Println("------- 4 -------")
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
-	// log a confirmation message if the message is sent successfully
-	//fmt.Println("reply sent" + string(sponsorInfo.Body))
+
 	err := sendMessage(webhookReqBody.Message.Chat.ID, textGenerator(sponsorInfo.Body))
-	fmt.Println("------- 5 -------")
 	if err != nil {
-		fmt.Println("------- 6 -------")
-		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
+		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong sendMessage.")
 	}
-	fmt.Println("------- 7 -------")
+
 	return nil, nil
 }
 
@@ -91,11 +87,7 @@ func sendMessage(chatID int64, chatText string) error {
 	if err != nil {
 		return err
 	}
-
-	if res.StatusCode != http.StatusOK {
-		return errors.New("unexpected status" + res.Status)
-	}
-
+	fmt.Println(res)
 	return nil
 }
 
@@ -115,6 +107,7 @@ func textGenerator(sponsorInfo []byte) string {
 	errBinancePrice := json.Unmarshal(priceInfo.Body, &binancePrice)
 	if errBinancePrice != nil {
 		fmt.Println(errBinancePrice)
+		binancePrice.Price = "0"
 	}
 
 	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/5684/axie/axie-full-transparent.png\">.</a></b>!!!\n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName)
@@ -130,4 +123,15 @@ func textGenerator(sponsorInfo []byte) string {
 
 	result := chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b>Total UDS:  <i>%f</i></b>", TotalSlp, TotalUds)
 	return result
+}
+
+func getSponsorId(webhookReqBodyMessageText string) (string, *errors.RestErr) {
+	Aux := strings.Split("/facuompre@gmail.com", "/")
+	if _, addressHexErr := hex.DecodeString(Aux[1]); addressHexErr == nil {
+		return webhookReqBodyMessageText, nil
+	}
+	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
+		return webhookReqBodyMessageText, nil
+	}
+	return "", errors.NewBadRequestError("user id should be a hex or mail.")
 }
