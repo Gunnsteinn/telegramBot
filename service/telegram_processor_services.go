@@ -64,7 +64,7 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 	fmt.Println("------- 5 -------")
 	if err != nil {
 		fmt.Println("------- 6 -------")
-		return nil, err
+		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
 	fmt.Println("------- 7 -------")
 	return nil, nil
