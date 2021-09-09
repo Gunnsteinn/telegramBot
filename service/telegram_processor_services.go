@@ -1,15 +1,12 @@
 package service
 
 import (
-	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"github.com/Gunnsteinn/telegramBot/client"
 	"github.com/Gunnsteinn/telegramBot/domain"
-	"github.com/Gunnsteinn/telegramBot/utils/errors"
 	"math"
-	"net/http"
 	"net/mail"
 	"os"
 	"strconv"
@@ -48,8 +45,8 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text.")
 	}
 
-	sponsorUri, getSponsorErr := getSponsorId(strings.ToLower(webhookReqBody.Message.Text))
-	if getSponsorErr != nil {
+	sponsorUri := getSponsorId(strings.ToLower(webhookReqBody.Message.Text))
+	if len(sponsorUri) < 1 {
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
 
@@ -76,18 +73,23 @@ func sendMessage(chatID int64, chatText string) error {
 		ParseMode: "HTML",
 	}
 
-	// Create the JSON body from the struct
-	reqBytes, err := json.Marshal(reqBody)
-	if err != nil {
-		return err
+	result, getAdvErr := client.ResponseClient.Post(uriTelegram, reqBody)
+	if getAdvErr != nil {
+		fmt.Println(getAdvErr)
 	}
 
-	// Send a post request with your token
-	res, err := http.Post(uriTelegram, "application/json", bytes.NewBuffer(reqBytes))
-	if err != nil {
-		return err
-	}
-	fmt.Println(res)
+	//// Create the JSON body from the struct
+	//reqBytes, err := json.Marshal(reqBody)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//// Send a post request with your token
+	//res, err := http.Post(uriTelegram, "application/json", bytes.NewBuffer(reqBytes))
+	//if err != nil {
+	//	return err
+	//}
+	fmt.Println(result)
 	return nil
 }
 
@@ -125,13 +127,13 @@ func textGenerator(sponsorInfo []byte) string {
 	return result
 }
 
-func getSponsorId(webhookReqBodyMessageText string) (string, *errors.RestErr) {
+func getSponsorId(webhookReqBodyMessageText string) string {
 	Aux := strings.Split("/facuompre@gmail.com", "/")
 	if _, addressHexErr := hex.DecodeString(Aux[1]); addressHexErr == nil {
-		return webhookReqBodyMessageText, nil
+		return webhookReqBodyMessageText
 	}
 	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
-		return webhookReqBodyMessageText, nil
+		return webhookReqBodyMessageText
 	}
-	return "", errors.NewBadRequestError("user id should be a hex or mail.")
+	return ""
 }
