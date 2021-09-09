@@ -7,6 +7,7 @@ import (
 	"github.com/Gunnsteinn/telegramBot/client"
 	"github.com/Gunnsteinn/telegramBot/domain"
 	"math"
+	"math/rand"
 	"net/mail"
 	"os"
 	"strconv"
@@ -23,6 +24,7 @@ var (
 	uriSponsor  = os.Getenv(uriCryptoGuild)
 	uriTelegram = os.Getenv(uriTelegramBot)
 	uriBinance  = os.Getenv(uriBinancePrice)
+	axiesArray  = []string{"2679", "5684", "2579", "2183", "5261", "1578", "2336", "1337", "1889", "1301", "2403"}
 )
 
 func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
@@ -96,7 +98,8 @@ func textGenerator(sponsorInfo []byte) string {
 		binancePrice.Price = "0"
 	}
 
-	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/5684/axie/axie-full-transparent.png\">.</a></b>!!!\n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName)
+	n := rand.Int() % len(axiesArray)
+	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!!\n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n])
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
