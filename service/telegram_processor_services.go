@@ -110,7 +110,7 @@ func textGenerator(sponsorInfo []byte) string {
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
 	TotalUds := price * float64(TotalSlp)
 
-	result := chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b>Total UDS:  <i>%f</i></b>", TotalSlp, TotalUds)
+	result := chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>", TotalSlp, TotalUds)
 	return result
 }
 
