@@ -107,13 +107,13 @@ func textGenerator(sponsorInfo []byte) string {
 		fmt.Println(errBinancePrice)
 	}
 
-	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/3624156/axie/axie-full-transparent.png\">.</a></b>!!!\n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName)
+	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/5684/axie/axie-full-transparent.png\">.</a></b>!!!\n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName)
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
 		sponsorProfitSlp := int(math.RoundToEven(float64(team.Adventurer.ProfitSlp / 2)))
 		teamSlice = append(teamSlice, fmt.Sprintf("<code>\n\t\t\t\t\tEquipo:       %s\n\t\t\t\t\t[%s]Equipo:    %f\n\t\t\t\t\tSPLs Ganados: %d\n\t\t\t\t\t</code>\n\t\t\t\t\t", team.TeamName, "%", team.PoolPercent, sponsorProfitSlp))
-		TotalSlp += TotalSlp + sponsorProfitSlp
+		TotalSlp += TotalSlp + (sponsorProfitSlp * (int(team.PoolPercent) / 100))
 	}
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
 	TotalUds := price * float64(TotalSlp)

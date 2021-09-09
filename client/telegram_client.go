@@ -63,48 +63,6 @@ func (r *responseClient) do(method string, url string, body interface{}) (*domai
 	return &finalResponse, nil
 }
 
-func FetchAdventurerInfo(ClientID string) (*domain.Response, error) {
-	URL := "https://cryptoguild.herokuapp.com/AdventurerStatus/" + ClientID
-	resp, err := http.Get(URL)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var cResp domain.Response
-	//Decode the data
-	if err := json.NewDecoder(resp.Body).Decode(&cResp); err != nil {
-		return nil, err
-	}
-	//Invoke the text output function & return it with nil as the error value
-	return &cResp, nil
-}
-
-func getClient(url string, cBody interface{}, cResp interface{}) (interface{}, error) {
-
-	// Create the JSON body from the struct
-	reqBytes, err := json.Marshal(cBody)
-	if err != nil {
-		return nil, err
-	}
-
-	// Send a post request with your token
-	// "https://api.telegram.org/bot1913861473:AAGT0ranx9RBMrtRVzrLx5PYiakOsNH6VOE/sendMessage"
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(reqBytes))
-	if resp.StatusCode != http.StatusOK {
-		return nil, errors.New("unexpected status" + resp.Status)
-	}
-
-	defer resp.Body.Close()
-
-	//Decode the data
-	if err := json.NewDecoder(resp.Body).Decode(&cResp); err != nil {
-		return nil, err
-	}
-
-	return &cResp, nil
-}
-
 func getRequestBody(body interface{}) ([]byte, error) {
 	if body == nil {
 		return nil, nil
