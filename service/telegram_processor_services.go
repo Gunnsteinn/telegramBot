@@ -44,6 +44,11 @@ func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
 func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.SendMessageReqBody, error) {
 	fmt.Println("reply sent" + string(uriSponsor+strings.ToLower(webhookReqBody.Message.Text)))
 	fmt.Println(webhookReqBody.Message)
+
+	if !(len(webhookReqBody.Message.Text) > 0) {
+		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text")
+	}
+
 	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + strings.ToLower(webhookReqBody.Message.Text))
 	if getAdvErr != nil {
 		err := sendMessage(webhookReqBody.Message.Chat.ID, "Manco")
