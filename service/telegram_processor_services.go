@@ -100,8 +100,8 @@ func textGenerator(sponsorInfo []byte) string {
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
-		sponsorProfitSlp := int(math.Round(float64(team.Adventurer.ProfitSlp)/2)) * (int(team.PoolPercent) / 100)
-		teamSlice = append(teamSlice, fmt.Sprintf("<code>\n\t\t\t\t\tEquipo:       %s\n\t\t\t\t\t[%s]Equipo:    %f\n\t\t\t\t\tSPLs Ganados: %d\n\t\t\t\t\t</code>\n\t\t\t\t\t", team.TeamName, "%", team.PoolPercent, sponsorProfitSlp))
+		sponsorProfitSlp := int(math.Round(float64(team.Adventurer.ProfitSlp)/2) * (team.PoolPercent / 100))
+		teamSlice = append(teamSlice, fmt.Sprintf("<code>\n\t\t\t\t\tEquipo:       %s\n\t\t\t\t\t[%s]Equipo:    %f\n\t\t\t\t\tSPLs Ganados: %d\n\t\t\t\t\t</code>\n\t\t\t\t\t", team.TeamName, "%", int(team.PoolPercent), sponsorProfitSlp))
 		TotalSlp += sponsorProfitSlp
 	}
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
