@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/Gunnsteinn/telegramBot/domain"
 	"io/ioutil"
 	"net/http"
@@ -48,6 +49,13 @@ func (r *responseClient) do(method string, url string, body interface{}) (*domai
 		return nil, err
 	}
 
+	if response.StatusCode >= http.StatusInternalServerError {
+		defer response.Body.Close()
+		errBody, _ := responseBodyAsString(response)
+		fmt.Println("internal server error. " + errBody)
+		return nil, err
+	}
+
 	defer response.Body.Close()
 	responseBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -68,4 +76,13 @@ func getRequestBody(body interface{}) ([]byte, error) {
 		return nil, nil
 	}
 	return json.Marshal(body)
+}
+
+func responseBodyAsString(resp *http.Response) (string, error) {
+	if resp.Body == nil {
+		return "", nil
+	}
+
+	bytes, err := ioutil.ReadAll(resp.Body)
+	return string(bytes), err
 }
