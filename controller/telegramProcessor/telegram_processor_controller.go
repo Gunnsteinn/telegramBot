@@ -2,6 +2,7 @@ package telegramProcessor
 
 import (
 	"encoding/hex"
+	"fmt"
 	"github.com/Gunnsteinn/telegramBot/domain"
 	"github.com/Gunnsteinn/telegramBot/service"
 	"github.com/Gunnsteinn/telegramBot/utils/errors"
@@ -21,7 +22,7 @@ func getSponsorId(sponsorWalletParam string) (string, *errors.RestErr) {
 }
 
 func TelegramProcessor(c *gin.Context) {
-
+	fmt.Println(c)
 	var webhookReqBody domain.WebhookReqBody
 	if err := c.ShouldBindJSON(&webhookReqBody); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body.")
