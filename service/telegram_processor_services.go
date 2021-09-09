@@ -65,30 +65,15 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 
 // sayPolo takes a chatID and sends "polo" to them
 func sendMessage(chatID int64, chatText string) error {
-	// Create the request body struct
-
-	reqBody := domain.SendMessageReqBody{
+	result, getAdvErr := client.ResponseClient.Post(uriTelegram, domain.SendMessageReqBody{
 		ChatID:    chatID,
 		Text:      chatText,
 		ParseMode: "HTML",
-	}
-
-	result, getAdvErr := client.ResponseClient.Post(uriTelegram, reqBody)
+	})
 	if getAdvErr != nil {
 		fmt.Println(getAdvErr)
 	}
 
-	//// Create the JSON body from the struct
-	//reqBytes, err := json.Marshal(reqBody)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//// Send a post request with your token
-	//res, err := http.Post(uriTelegram, "application/json", bytes.NewBuffer(reqBytes))
-	//if err != nil {
-	//	return err
-	//}
 	fmt.Println(result)
 	return nil
 }
