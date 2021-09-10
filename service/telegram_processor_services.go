@@ -105,7 +105,7 @@ func textGenerator(sponsorInfo []byte) string {
 		emoticon = "\xF0\x9F\x8C\x9C"
 	}
 
-	chatText := fmt.Sprintf("Hola <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! \t\t%s \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n], emoticon)
+	chatText := fmt.Sprintf("Hola <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! \t\t\t\t\t\t%s \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n], emoticon)
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
