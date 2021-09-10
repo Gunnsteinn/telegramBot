@@ -76,7 +76,7 @@ func sendMessage(chatID int64, chatText string) error {
 		fmt.Println(getAdvErr)
 	}
 
-	fmt.Println(result)
+	fmt.Println(result.Status)
 	return nil
 }
 
@@ -99,6 +99,21 @@ func textGenerator(sponsorInfo []byte) string {
 		binancePrice.Price = "0"
 	}
 
+	return formatChatText(sponsor, binancePrice)
+}
+
+func getSponsorId(webhookReqBodyMessageText string) string {
+	Aux := strings.Split("/facuompre@gmail.com", "/")
+	if _, addressHexErr := hex.DecodeString(Aux[1]); addressHexErr == nil {
+		return webhookReqBodyMessageText
+	}
+	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
+		return webhookReqBodyMessageText
+	}
+	return ""
+}
+
+func formatChatText(sponsor domain.Sponsor, binancePrice domain.BinancePrice) string {
 	n := rand.Int() % len(axiesArray)
 	emoticon := "\xF0\x9F\x8C\x9E"
 	if time.Now().Hour() > 20 || time.Now().Hour() < 8 {
@@ -116,17 +131,5 @@ func textGenerator(sponsorInfo []byte) string {
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
 	TotalUds := price * float64(TotalSlp)
 
-	result := chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>", TotalSlp, TotalUds)
-	return result
-}
-
-func getSponsorId(webhookReqBodyMessageText string) string {
-	Aux := strings.Split("/facuompre@gmail.com", "/")
-	if _, addressHexErr := hex.DecodeString(Aux[1]); addressHexErr == nil {
-		return webhookReqBodyMessageText
-	}
-	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
-		return webhookReqBodyMessageText
-	}
-	return ""
+	return chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>", TotalSlp, TotalUds)
 }
