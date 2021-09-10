@@ -12,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -99,9 +100,12 @@ func textGenerator(sponsorInfo []byte) string {
 	}
 
 	n := rand.Int() % len(axiesArray)
-	emoticons := "\xF0\x9F\x8C\x9E"
-	emoticons1 := "\xF0\x9F\x8C\x9C"
-	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! %s - %s \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n], emoticons, emoticons1)
+	emoticon := "\xF0\x9F\x8C\x9E"
+	if time.Now().Hour() > 20 || time.Now().Hour() < 8 {
+		emoticon = "\xF0\x9F\x8C\x9C"
+	}
+
+	chatText := fmt.Sprintf("Hola <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! %s \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n], emoticon)
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
