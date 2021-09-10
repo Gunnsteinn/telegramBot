@@ -99,7 +99,7 @@ func textGenerator(sponsorInfo []byte) string {
 	}
 
 	n := rand.Int() % len(axiesArray)
-	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! \tU+2600\t\\xE2\\x98\\x80 U+1F319\t\\xF0\\x9F\\x8C\\x99 \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n])
+	chatText := fmt.Sprintf("Buenos días <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! %0A\\uD83D\\uDCC9 \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n])
 	var teamSlice []string
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
