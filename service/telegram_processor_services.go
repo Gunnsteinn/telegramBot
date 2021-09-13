@@ -116,7 +116,7 @@ func getSponsorId(webhookReqBodyMessageText string) string {
 func formatChatText(sponsor domain.Sponsor, binancePrice domain.BinancePrice) string {
 	n := rand.Int() % len(axiesArray)
 	emoticon := "\xF0\x9F\x8C\x9E"
-	if time.Now().Hour() > 20 || time.Now().Hour() < 8 {
+	if time.Now().Hour() > 23 || time.Now().Hour() < 11 {
 		emoticon = "\xF0\x9F\x8C\x9C"
 	}
 
@@ -125,11 +125,13 @@ func formatChatText(sponsor domain.Sponsor, binancePrice domain.BinancePrice) st
 	TotalSlp := 0
 	for _, team := range sponsor.Teams {
 		sponsorProfitSlp := int(math.Round(float64(team.Adventurer.ProfitSlp)/2) * (team.PoolPercent / 100))
-		teamSlice = append(teamSlice, fmt.Sprintf("<code>\n\t\t\t\tEquipo:       %s\n\t\t\t\t[%s]Equipo:    %d\n\t\t\t\tSPLs Ganados: %d\n\t\t\t\t\t</code>\n\t\t\t\t\t", team.TeamName, "%", int(team.PoolPercent), sponsorProfitSlp))
+		teamSlice = append(teamSlice, fmt.Sprintf("<code>\n\t\t\t\tEquipo:       %s\n\t\t\t\t[%s]Equipo:    %d\n\t\t\t\tSLPs Ganados: %d\n\t\t\t\t\t</code>\n\t\t\t\t\t", team.TeamName, "%", int(team.PoolPercent), sponsorProfitSlp))
 		TotalSlp += sponsorProfitSlp
 	}
+
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
 	TotalUds := price * float64(TotalSlp)
 
-	return chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>", TotalSlp, TotalUds)
+	pepe := chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>\n\t\t\t\t\t ____________________________\n\t\t\t\t\t|                            |\n\t\t\t\t\t|    SLP/USDT      %f          |\n\t\t\t\t\t|____________________________|", TotalSlp, TotalUds, price)
+	return pepe
 }
