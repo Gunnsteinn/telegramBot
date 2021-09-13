@@ -132,6 +132,6 @@ func formatChatText(sponsor domain.Sponsor, binancePrice domain.BinancePrice) st
 	price, _ := strconv.ParseFloat(binancePrice.Price, 64)
 	TotalUds := price * float64(TotalSlp)
 
-	pepe := chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>\n\t\t\t\t\t ____________________________\n\t\t\t\t\t|                            |\n\t\t\t\t\t|    SLP/USDT      %f          |\n\t\t\t\t\t|____________________________|", TotalSlp, TotalUds, price)
-	return pepe
+	emoticonSimbol := "\xF0\x9F\x8C\x9E"
+	return chatText + strings.Join(teamSlice, "") + fmt.Sprintf("<b>Total SLP:  <i>%d</i></b>\n\t\t\t\t<b> Total UDS:  <i>%f</i></b>\n\t\t\t\t\t    %sSLP/USDT      %f%s          ", TotalSlp, TotalUds, emoticonSimbol, price, emoticonSimbol)
 }
