@@ -48,13 +48,13 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text.")
 	}
 
-	sponsorUri := getSponsorId(strings.ToLower(webhookReqBody.Message.Text))
+	sponsorUri := sponsorValidation(strings.ToLower(webhookReqBody.Message.Text))
 	if len(sponsorUri) < 1 {
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
 
 	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + sponsorUri)
-	if getAdvErr != nil {
+	if getAdvErr != nil || sponsorInfo.StatusCode >= 400 {
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
 
@@ -102,11 +102,21 @@ func textGenerator(sponsorInfo []byte) string {
 	return formatChatText(sponsor, binancePrice)
 }
 
-func getSponsorId(webhookReqBodyMessageText string) string {
-	Aux := strings.Split("/facuompre@gmail.com", "/")
+func sponsorValidation(webhookReqBodyMessageText string) string {
+	Aux := strings.Split(webhookReqBodyMessageText, "/")
+
+	if len(Aux) < 2 {
+		return ""
+	}
+
+	if len(Aux[1]) < 1 {
+		return ""
+	}
+
 	if _, addressHexErr := hex.DecodeString(Aux[1]); addressHexErr == nil {
 		return webhookReqBodyMessageText
 	}
+
 	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
 		return webhookReqBodyMessageText
 	}

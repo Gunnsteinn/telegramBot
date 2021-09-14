@@ -3,6 +3,7 @@ package domain
 // Sponsor (Sponsor info) response is exported, it models the data we receive.
 type Sponsor struct {
 	Name          string `bson:"name,omitempty" json:"name,omitempty"`
+	NickName      string `bson:"nick_name,omitempty" json:"nick_name,omitempty"`
 	LastName      string `bson:"last_name,omitempty" json:"last_name,omitempty"`
 	Email         string `bson:"email,omitempty" json:"email,omitempty"`
 	WalletAddress string `bson:"wallet_address,omitempty" json:"wallet_address,omitempty"`
