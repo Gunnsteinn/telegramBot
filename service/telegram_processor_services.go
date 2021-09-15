@@ -1,7 +1,6 @@
 package service
 
 import (
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"github.com/Gunnsteinn/telegramBot/client"
@@ -19,6 +18,8 @@ const (
 	uriCryptoGuild  = "uri_crypto_guild"
 	uriTelegramBot  = "uri_telegram_bot"
 	uriBinancePrice = "uri_binance_price"
+	sunEmoji        = "\xF0\x9F\x8C\x9E"
+	moonEmoji       = "\xF0\x9F\x8C\x9C"
 )
 
 var (
@@ -29,7 +30,7 @@ var (
 )
 
 func GetSponsor(sponsorId string) (*domain.Sponsor, error) {
-	result, err := client.ResponseClient.Get(uriSponsor + sponsorId)
+	result, err := client.ResponseClient.Get(uriSponsor + "?filter=" + sponsorId)
 	if err != nil {
 		return nil, err
 	}
@@ -48,12 +49,12 @@ func TelegramProcessorService(webhookReqBody domain.WebhookReqBody) (*domain.Sen
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Empty Text.")
 	}
 
-	sponsorUri := sponsorValidation(strings.ToLower(webhookReqBody.Message.Text))
-	if len(sponsorUri) < 1 {
+	sponsorNickName := sponsorValidation(strings.ToLower(webhookReqBody.Message.Text))
+	if len(sponsorNickName) < 1 {
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
 
-	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + sponsorUri)
+	sponsorInfo, getAdvErr := client.ResponseClient.Get(uriSponsor + "?filter=" + sponsorNickName)
 	if getAdvErr != nil || sponsorInfo.StatusCode >= 400 {
 		return nil, sendMessage(webhookReqBody.Message.Chat.ID, "Wrong user.")
 	}
@@ -113,21 +114,17 @@ func sponsorValidation(webhookReqBodyMessageText string) string {
 		return ""
 	}
 
-	if _, addressHexErr := hex.DecodeString(Aux[1]); addressHexErr == nil {
-		return webhookReqBodyMessageText
-	}
-
 	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
-		return webhookReqBodyMessageText
+		return Aux[1]
 	}
 	return ""
 }
 
 func formatChatText(sponsor domain.Sponsor, binancePrice domain.BinancePrice) string {
 	n := rand.Int() % len(axiesArray)
-	emoticon := "\xF0\x9F\x8C\x9E"
+	emoticon := sunEmoji
 	if time.Now().Hour() > 23 || time.Now().Hour() < 11 {
-		emoticon = "\xF0\x9F\x8C\x9C"
+		emoticon = moonEmoji
 	}
 
 	chatText := fmt.Sprintf("Hola <b>%s %s<a href=\"https://storage.googleapis.com/assets.axieinfinity.com/axies/%s/axie/axie-full-transparent.png\">.</a></b>!!! \t\t\t...%s \n\n\t\t\t\t- Este es el informe de tus equipos:\n\n\t\t\t\t\t", sponsor.Name, sponsor.LastName, axiesArray[n], emoticon)
