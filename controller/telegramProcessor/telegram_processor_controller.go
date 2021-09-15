@@ -11,13 +11,12 @@ import (
 
 func TelegramProcessor(c *gin.Context) {
 	var webhookReqBody domain.WebhookReqBody
-	fmt.Println(c.Request.Body)
 	if err := c.ShouldBindJSON(&webhookReqBody); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body.")
 		c.JSON(restErr.Status, restErr)
 		return
 	}
-
+	fmt.Println(webhookReqBody)
 	result, getAdvErr := service.TelegramProcessorService(webhookReqBody)
 	if getAdvErr != nil {
 		c.JSON(http.StatusInternalServerError, getAdvErr)
