@@ -16,7 +16,7 @@ func TelegramProcessor(c *gin.Context) {
 		c.JSON(restErr.Status, restErr)
 		return
 	}
-	fmt.Println(webhookReqBody)
+	fmt.Println(webhookReqBody.Message)
 	result, getAdvErr := service.TelegramProcessorService(webhookReqBody)
 	if getAdvErr != nil {
 		c.JSON(http.StatusInternalServerError, getAdvErr)
