@@ -7,7 +7,6 @@ import (
 	"github.com/Gunnsteinn/telegramBot/domain"
 	"math"
 	"math/rand"
-	"net/mail"
 	"os"
 	"strconv"
 	"strings"
@@ -114,10 +113,7 @@ func sponsorValidation(webhookReqBodyMessageText string) string {
 		return ""
 	}
 
-	if _, addressMailErr := mail.ParseAddress(Aux[1]); addressMailErr == nil {
-		return Aux[1]
-	}
-	return ""
+	return Aux[1]
 }
 
 func formatChatText(sponsor domain.Sponsor, binancePrice domain.BinancePrice) string {
